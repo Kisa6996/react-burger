@@ -1,0 +1,23 @@
+.header{
+    background: #1C1C21;
+    padding-left: 320px !important;
+    padding-right: 320px !important;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1280px;
+    margin: 0 auto;
+  
+    
+}
+.link_item{
+    display: flex;
+}
+  
+.link{
+    display: flex;
+    align-items: center;
+}

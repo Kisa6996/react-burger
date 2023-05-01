@@ -1,0 +1,7 @@
+.block{
+    display: flex;
+    align-items: center;
+    gap:13px;
+    margin-bottom: 16px;
+    /* padding: 16px; */
+}
