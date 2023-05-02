@@ -2,9 +2,9 @@ import styles from "./item-nav.module.css";
 import PropTypes from 'prop-types';
 import React from "react";
 
-function ItemNav({ icone, children, flag }) {
+function ItemNav({icone, children, flag }) {
   return (
-    <div className={`${styles.item} p-5`}>
+    <a href="#" className={`${styles.item} p-5`}>
       {icone}
       {flag && (
         <p className="text text_type_main-default text_color_inactive">
@@ -12,18 +12,18 @@ function ItemNav({ icone, children, flag }) {
         </p>
       )}
       {!flag && (
-        <p>
+        <p className="text text_type_main-default">
           {children}
         </p>
       )}
-    </div>
+    </a>
   );
 }
 
 ItemNav.propTypes = {
-  icone:PropTypes.object,
-  children:PropTypes.string,
-  flag: PropTypes.bool
+  icone:PropTypes.object.isRequired,
+  children:PropTypes.string.isRequired,
+  flag: PropTypes.bool.isRequired
 }; 
 
 export default ItemNav;

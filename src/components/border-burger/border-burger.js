@@ -14,9 +14,9 @@ function BorderBurger({ image, price, text, type, children }) {
   );
 }
 BorderBurger.propTypes = {
-  type: PropTypes.string,
-  image: PropTypes.string,
-  price: PropTypes.number,
-  text: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
 };
 export default BorderBurger;

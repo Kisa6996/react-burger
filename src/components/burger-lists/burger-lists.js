@@ -1,7 +1,7 @@
 import styles from "./burger-lists.module.css";
 import BurgerList from "../burger-list/burger-list";
-import PropTypes from "prop-types";
 import BorderBurger from "../border-burger/border-burger";
+import ingredients from "../../prop-types/ingredients";
 
 function BurgerLists({ data }) {
   const style = { "--size": data.length - 1 };
@@ -45,23 +45,5 @@ function BurgerLists({ data }) {
     </div>
   );
 }
-BurgerLists.propTypes = {
-  children: PropTypes.string,
-  arr: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
-};
+BurgerLists.propTypes = ingredients
 export default BurgerLists;

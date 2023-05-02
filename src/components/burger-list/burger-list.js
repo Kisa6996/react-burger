@@ -19,9 +19,9 @@ function BurgerList({ name, price, image }) {
   );
 }
 BurgerList.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  image: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
 
 };
 export default BurgerList;

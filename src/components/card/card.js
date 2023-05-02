@@ -21,9 +21,9 @@ function Card({ image, price, name, count }) {
   );
 }
 Card.propTypes = {
-      name: PropTypes.string,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      count: PropTypes.number,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
 };
 export default Card;
