@@ -1,0 +1,7 @@
+.item{
+    display: flex;
+    align-items: center;
+    gap:8px;
+    color: #F2F2F3;
+    text-decoration: none;
+}

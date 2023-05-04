@@ -1,0 +1,15 @@
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.price{
+    display: flex;
+    gap:9px
+}
+.text{
+    height: 48px;
+    max-width: 272px;
+}
