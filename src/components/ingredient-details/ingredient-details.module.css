@@ -1,0 +1,10 @@
+.block{
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+.struct{
+    display: flex;
+    gap:20px;
+    margin-bottom: 60px;
+}

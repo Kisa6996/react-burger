@@ -1,0 +1,12 @@
+
+.button{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 40px;
+}
+.container {
+    margin-top: 16px;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
