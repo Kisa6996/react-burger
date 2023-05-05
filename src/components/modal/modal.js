@@ -21,35 +21,39 @@ function Modal({ children, open, onClose, text }) {
     };
   });
   const handleEscapeKey = () => (event) => {
-    if (event.code === 'Escape') {
-        onClose(false);
+    if (event.code === "Escape") {
+      onClose(false);
     }
-}
+  };
   useEffect((e) => {
-    document.addEventListener('keydown', handleEscapeKey(e))
-    return document.removeEventListener('keydown', handleEscapeKey(e))
-  },)
+    document.addEventListener("keydown", handleEscapeKey(e));
+    return document.removeEventListener("keydown", handleEscapeKey);
+  });
 
-    return ReactDOM.createPortal(
-      <div className={styles.modal}>
-        <div className={styles.modalWindow}>
-          <div className={styles.block}>
-            <div className={`${styles.title} text text_type_main-large`}>
-                {text}
-            </div>
-            <CloseIcon type="primary" onClick={onClose} />
+  return ReactDOM.createPortal(
+    <div className={styles.modal}>
+      <div className={styles.modalWindow}>
+        <div className={styles.block}>
+          <div className={`${styles.title} text text_type_main-large`}>
+            {text}
           </div>
-          {children}
+          <CloseIcon type="primary" onClick={onClose} />
         </div>
-        <ModalOverlay onClick={onClose}/>
-      </div>,
-      element
-    );
+        {children}
+      </div>
+      {open && <ModalOverlay onClick={onClose} />}
+    </div>,
+    element
+  );
 }
-ModalOverlay.propTypes = {
-  onClick: PropTypes.func.isRequired,
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.element.isRequired,
+};
+Modal.defaultProps = {
+  children: null,
+  text: ''
 };
 export default Modal;

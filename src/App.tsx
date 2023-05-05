@@ -4,6 +4,7 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import { useEffect, useState } from 'react';
+import getIngredients from './utils/burger-api'
 
 function App() {
   const ApiUrl = "https://norma.nomoreparties.space/api/ingredients"
@@ -12,10 +13,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() =>{
-    fetch(ApiUrl)
-    .then((res) => res.json())
+    getIngredients(ApiUrl, setError)
     .then((data) => setData(data.data))
-    .catch((error) => setError(error.message))
     .finally(() => setIsLoading(false))
   }, [])
   if (error) {

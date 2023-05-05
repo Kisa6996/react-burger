@@ -18,6 +18,6 @@ function IngredientDetails({data}) {
   );
 }
 IngredientDetails.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredients)),
+  data: PropTypes.shape(ingredients).isRequired,
 };
 export default IngredientDetails;
