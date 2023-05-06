@@ -1,8 +1,5 @@
 import PropTypes from "prop-types";
 const ingredients = {
-  children: PropTypes.string.isRequired,
-  arr: PropTypes.arrayOf(
-    PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
@@ -15,7 +12,5 @@ const ingredients = {
       image_mobile: PropTypes.string.isRequired,
       image_large: PropTypes.string.isRequired,
       __v: PropTypes.number.isRequired,
-    })
-  ),
-};
+    }
 export default ingredients

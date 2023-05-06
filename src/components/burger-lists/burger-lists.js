@@ -2,6 +2,7 @@ import styles from "./burger-lists.module.css";
 import BurgerList from "../burger-list/burger-list";
 import BorderBurger from "../border-burger/border-burger";
 import ingredients from "../../prop-types/ingredients";
+import PropTypes from "prop-types";
 
 function BurgerLists({ data }) {
   const style = { "--size": data.length - 1 };
@@ -45,5 +46,7 @@ function BurgerLists({ data }) {
     </div>
   );
 }
-BurgerLists.propTypes = ingredients
+BurgerLists.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredients)),
+};
 export default BurgerLists;
