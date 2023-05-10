@@ -1,52 +1,54 @@
 import styles from "./burger-lists.module.css";
 import BurgerList from "../burger-list/burger-list";
 import BorderBurger from "../border-burger/border-burger";
-import ingredients from "../../prop-types/ingredients";
-import PropTypes from "prop-types";
+import { BurgerContext, BreadContext} from "../../context/contex-app";
+import { useContext} from "react";
 
-function BurgerLists({ data }) {
-  const style = { "--size": data.length - 1 };
+function BurgerLists() {
+  const [burger] = useContext(BurgerContext);
+  const [bread] = useContext(BreadContext);
+
+  const style = { "--size": burger.length };
   return (
     <div className={styles.block}>
       <div
         style={{
           display: "flex",
-          alignItems: "center",
           flexDirection: "column",
           gap: "10px",
         }}
       >
-        <BorderBurger
-          image={data[0].image}
-          price={data[0].price}
-          text={data[0].name}
-          type="top"
-        >
-          (вверх)
-        </BorderBurger>
+        {bread.length !== 0 && (
+          <BorderBurger
+            image={bread.image}
+            price={bread.price}
+            text={bread.name}
+            type="top"
+          >
+            (вверх)
+          </BorderBurger>
+        )}
         <div className={styles.scroll} style={style}>
-          {data.slice(1).map((item) => (
-            <BurgerList
-              name={item.name}
-              price={item.price}
-              image={item.image}
-              key={item._id}
-            />
-          ))}
+          {burger.length !== 0 &&
+            burger.map((item, index) => (
+              <BurgerList
+                item = {item}
+                key={index}
+              />
+            ))}
         </div>
-        <BorderBurger
-          image={data[0].image}
-          price={data[0].price}
-          text={data[0].name}
-          type="bottom"
-        >
-          (низ)
-        </BorderBurger>
+        {bread.length !== 0 && (
+          <BorderBurger
+            image={bread.image}
+            price={bread.price}
+            text={bread.name}
+            type="bottom"
+          >
+            (низ)
+          </BorderBurger>
+        )}
       </div>
     </div>
   );
 }
-BurgerLists.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredients)),
-};
 export default BurgerLists;

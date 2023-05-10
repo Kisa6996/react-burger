@@ -1,18 +1,34 @@
 import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import ingredients from "../../prop-types/ingredients";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {
+  BurgerContext,
+  BreadContext,
+  PriceContext,
+} from "../../context/contex-app";
+
 
 function Card({ data }) {
   const [open, setOpen] = useState(false);
+  const setBurger = useContext(BurgerContext)[1];
+  const [bread, setBread] = useContext(BreadContext);
+  const [price, setPrice] = useContext(PriceContext);
   function onOpen() {
     setOpen(true);
+    if (data.type !== "bun") {
+      setBurger({ type: "add", info: data });
+      setPrice(price + data.price);
+    } else {
+      setPrice(data.price * 2 + (price - bread.price * 2));
+      setBread(data);
+    }
   }
   return (
     <div>

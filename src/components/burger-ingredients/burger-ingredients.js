@@ -1,10 +1,12 @@
 import styles from "./burger-ingredients.module.css";
 import MyTab from "../my-tab/my-tab";
 import Cards from "../cards/cards";
-import PropTypes from "prop-types";
-import ingredients from "../../prop-types/ingredients";
+import { DataContext } from "../../context/contex-app";
+import { useContext } from "react";
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
+  const data = useContext(DataContext);
+
   const bread = data.filter((item) => item.type === "bun");
   const sauce = data.filter((item) => item.type === "sauce");
   const stuffing = data.filter((item) => item.type === "main");
@@ -20,8 +22,5 @@ function BurgerIngredients({ data }) {
     </section>
   );
 }
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredients)),
-};
 
 export default BurgerIngredients;
