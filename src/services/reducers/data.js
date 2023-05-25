@@ -4,7 +4,8 @@ import {
   GET_DATA_SUCCESS,
   ADD_COUNT,
   UPDATE_BUN,
-  REMOVE_COUNT
+  REMOVE_COUNT,
+  INITIAL,
 } from "../actions/data";
 const initialState = {
   dataRequest: true,
@@ -28,6 +29,15 @@ const dataReducer = (state = initialState, action) => {
           count: 0,
         })),
         dataRequest: false,
+      };
+    }
+    case INITIAL: {
+      return {
+        ...state,
+        data: state.data.map((item) => ({
+          ingredient: item.ingredient,
+          count: 0,
+        })),
       };
     }
     case GET_DATA_FAILED: {

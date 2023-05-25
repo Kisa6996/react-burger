@@ -8,8 +8,9 @@ import PropTypes from "prop-types";
 const modalRootElement = document.querySelector("#modal");
 
 function Modal({ children, open, onClose, text }) {
-  const element = useMemo(() => document.createElement("div"), []);
+ 
 
+  const element = useMemo(() => document.createElement("div"), []);
   useEffect(() => {
     if (open) {
       modalRootElement.appendChild(element);
@@ -53,6 +54,6 @@ Modal.propTypes = {
 };
 Modal.defaultProps = {
   children: null,
-  text: ''
+  text: "",
 };
 export default Modal;

@@ -24,6 +24,7 @@ function BurgerIngredients() {
     stuffing = data.filter((item) => item.ingredient.type === "main");
   }
 
+
   if (dataFailed) {
     return <h1 className="text text_type_main-large">Error:</h1>;
   }
@@ -31,11 +32,11 @@ function BurgerIngredients() {
   return (
     <section>
       <h1 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h1>
-      <MyTab />
+      <MyTab/>
       {dataRequest ? (
         <h1 className="text text_type_main-large"> Loading...</h1>
       ) : (
-        <div className={styles.scroll}>
+        <div id="scroll" className={styles.scroll}>
           <Cards id="bun" arr={bread}>
             Булки
           </Cards>

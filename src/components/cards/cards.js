@@ -6,10 +6,8 @@ import PropTypes from "prop-types";
 function Cards({ children, arr, id }) {
   return (
     <>
-      <p id={id} data-scroll className="text text_type_main-medium mb-6 mt-10">
-        {children}
-      </p>
-      <div className={`${styles.cards} ml-4`}>
+      <p className="text text_type_main-medium mb-6 mt-10">{children}</p>
+      <div id={id} data-scroll className={`${styles.cards} ml-4`}>
         {arr.map((item) => (
           <Card
             data={item.ingredient}
@@ -29,6 +27,7 @@ Cards.propTypes = {
       count: PropTypes.number,
     })
   ).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Cards;

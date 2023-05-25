@@ -8,6 +8,10 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../services/actions/order";
+import { INITIAL } from "../../services/actions/data";
+
+import { CLEAR } from "../../services/actions/burger";
+
 function Order() {
   const { price, topping, bread } = useSelector((state) => state.burgerReducer);
   const { orderNumber, orderRequest, orderFailed } = useSelector(
@@ -19,10 +23,18 @@ function Order() {
   const [open, setOpen] = useState(false);
   const Api_URL = "https://norma.nomoreparties.space/api/orders";
   function onOpen() {
-    setOpen(true);
-    const arr = topping.map((item) => item.structure);
-    arr.unshift(bread);
-    dispatch(getOrder(arr, Api_URL));
+    if (bread !== null) {
+      setOpen(true);
+      let arr = topping.map((item) => item.structure);
+      arr.unshift(bread);
+      arr = arr.map((value) => value._id);
+      dispatch(getOrder(arr, Api_URL));
+    }
+  }
+  function onclose() {
+    setOpen(false);
+    dispatch({ type: CLEAR });
+    dispatch({ type: INITIAL });
   }
   return (
     <div className={`${styles.block} mt-10`}>
@@ -34,7 +46,7 @@ function Order() {
         Оформить заказ
       </Button>
       {open && !orderRequest && (
-        <Modal open={open} onClose={() => setOpen(false)}>
+        <Modal open={open} onClose={onclose}>
           {!orderFailed ? (
             <OrderDetails number={orderNumber} />
           ) : (

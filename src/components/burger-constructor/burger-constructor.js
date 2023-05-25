@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateConsrtuctor } from "../../services/actions/burger";
 import { updateData } from "../../services/actions/data";
 import styles from "./burger-constructor.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 function BurgerConstructor() {
 
@@ -19,7 +20,7 @@ function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      dispatch(updateConsrtuctor(item));
+      dispatch(updateConsrtuctor(item, uuidv4()));
       dispatch(updateData(item));
     },
   });

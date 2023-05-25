@@ -4,6 +4,7 @@ export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const ADD_COUNT = "ADD_COUNT";
 export const REMOVE_COUNT = "REMOVE_COUNT";
 export const UPDATE_BUN = "UPDATE_BUN";
+export const INITIAL = "INITIAL";
 
 export function getData(Api_UR) {
   return function (dispatch) {

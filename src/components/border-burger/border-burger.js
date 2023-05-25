@@ -21,5 +21,6 @@ BorderBurger.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 export default BorderBurger;

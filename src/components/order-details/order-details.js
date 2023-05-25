@@ -1,7 +1,10 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
+
+
 function OrderDetails({number}) {
+
   return (
     <div>
       <div className={styles.container}>

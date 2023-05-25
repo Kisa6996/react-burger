@@ -3,12 +3,25 @@ import React, { useEffect } from "react";
 function MyTab() {
   const [current, setCurrent] = React.useState(`bun`);
 
-    const handleIntersection = (entries) => {
+  const handleIntersection = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const sectionId = entry.target.getAttribute("id");
-        console.log(sectionId);
-        setCurrent(sectionId);
+        const element = document.getElementById("scroll");
+        let flag = null;
+        if (element !== null) {
+          flag = element.scrollTop;
+        }
+        if (flag < 30) {
+          setCurrent("bun");
+        } else {
+          if(current === "bun"){
+            setCurrent("souse");
+          }
+          else{
+            setCurrent(sectionId);
+          }
+        }
       }
     });
   };
@@ -38,7 +51,6 @@ function MyTab() {
   };
   return (
     <div style={{ display: "flex" }}>
-      <span data-bun></span>
       <Tab
         value="bun"
         active={current === "bun"}
@@ -46,7 +58,6 @@ function MyTab() {
       >
         Булки
       </Tab>
-      <span data-souse></span>
       <Tab
         value="souse"
         active={current === "souse"}
@@ -54,7 +65,6 @@ function MyTab() {
       >
         Соусы
       </Tab>
-      <span data-topping></span>
       <Tab
         value="topping"
         active={current === "topping"}

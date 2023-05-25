@@ -1,5 +1,5 @@
-import { ADD_ITEM, REMOVE_ITEM, ADD_BUN, SORT } from "../actions/burger";
-import { v4 as uuidv4 } from "uuid";
+import { ADD_ITEM, REMOVE_ITEM, ADD_BUN, SORT, CLEAR } from "../actions/burger";
+
 const initialState = {
   bread: null,
   topping: [],
@@ -19,6 +19,9 @@ const burgerReducer = (state = initialState, action) => {
         topping: newItem,
       };
     }
+    case CLEAR: {
+      return initialState;
+    }
     case ADD_ITEM: {
       return {
         ...state,
@@ -26,28 +29,30 @@ const burgerReducer = (state = initialState, action) => {
         topping: [
           ...state.topping,
           {
-            uuid: uuidv4(),
-            structure: action.payload,
+            uuid: action.payload.uuid,
+            structure: action.payload.item,
           },
         ],
-        price: state.price + action.payload.price,
+        price: state.price + action.payload.item.price,
       };
     }
     case ADD_BUN: {
       return {
         ...state,
         flag: true,
-        bread: action.payload,
+        bread: action.payload.item,
         price:
           state.bread === null
-            ? state.price + action.payload.price * 2
-            : state.price + action.payload.price * 2 - state.bread.price * 2,
+            ? state.price + action.payload.item.price * 2
+            : state.price +
+              action.payload.item.price * 2 -
+              state.bread.price * 2,
       };
     }
 
     case REMOVE_ITEM: {
       let flagDo = true;
-      console.log(action.payload);
+
       const newItem = state.topping.filter(
         (value) => value.uuid !== action.payload.uuid
       );
