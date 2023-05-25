@@ -1,14 +1,31 @@
 import styles from "./burger-lists.module.css";
 import BurgerList from "../burger-list/burger-list";
 import BorderBurger from "../border-burger/border-burger";
-import { BurgerContext, BreadContext} from "../../context/contex-app";
-import { useContext} from "react";
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import {SORT} from "../../services/actions/burger"
 
 function BurgerLists() {
-  const [burger] = useContext(BurgerContext);
-  const [bread] = useContext(BreadContext);
+  const { bread, topping} = useSelector((state) => state.burgerReducer);
+  
+  const style = { "--size": topping.length };
 
-  const style = { "--size": burger.length };
+  const dispatch = useDispatch()
+
+  // Сортировка ингридиетов
+  const [, drop] = useDrop({
+    accept: "sort",
+    drop(item, monitor) {
+      const difference = monitor.getDifferenceFromInitialOffset();
+      dispatch({
+        type: SORT,
+        burger: item,
+        y: difference.y
+      })
+    },
+  });
+
+
   return (
     <div className={styles.block}>
       <div
@@ -18,7 +35,7 @@ function BurgerLists() {
           gap: "10px",
         }}
       >
-        {bread.length !== 0 && (
+        {bread !== null && (
           <BorderBurger
             image={bread.image}
             price={bread.price}
@@ -28,16 +45,13 @@ function BurgerLists() {
             (вверх)
           </BorderBurger>
         )}
-        <div className={styles.scroll} style={style}>
-          {burger.length !== 0 &&
-            burger.map((item, index) => (
-              <BurgerList
-                item = {item}
-                key={index}
-              />
+        <div ref={drop} className={styles.scroll} style={style}>
+          {topping.length !== 0 &&
+            topping.map((item) => (
+              <BurgerList item={item} key={item.uuid} />
             ))}
         </div>
-        {bread.length !== 0 && (
+        {bread !== null && (
           <BorderBurger
             image={bread.image}
             price={bread.price}

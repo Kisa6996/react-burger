@@ -3,45 +3,26 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { BurgerContext, BreadContext, PriceContext, NumberContext } from "../../context/contex-app";
-import { useContext } from "react";
-let arr = [];
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../../services/actions/order";
 function Order() {
-  const [burger] = useContext(BurgerContext);
-  const [bread] = useContext(BreadContext);
+  const { price, topping, bread } = useSelector((state) => state.burgerReducer);
+  const { orderNumber, orderRequest, orderFailed } = useSelector(
+    (state) => state.orderReducer
+  );
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
-  const [number, setNumber] = useContext(NumberContext);
-  const [price] = useContext(PriceContext);
-
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    arr = burger.concat(bread);
-  }, [burger, bread]);
-
-  burger.forEach((value) => {
-    arr.push(value._id)
-  })
-
+  const Api_URL = "https://norma.nomoreparties.space/api/orders";
   function onOpen() {
-    setIsLoading(false)
     setOpen(true);
-    fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      body: JSON.stringify({
-        ingredients: arr,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((res) => res.ok ? res.json() : res.json().then(setError('Ошибка, повторите снова :(')))
-      .then((json) => setNumber(json.order.number))
-      .finally(() => setIsLoading(true));
+    const arr = topping.map((item) => item.structure);
+    arr.unshift(bread);
+    dispatch(getOrder(arr, Api_URL));
   }
   return (
     <div className={`${styles.block} mt-10`}>
@@ -52,11 +33,15 @@ function Order() {
       <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
         Оформить заказ
       </Button>
-      {open && isLoading && (
+      {open && !orderRequest && (
         <Modal open={open} onClose={() => setOpen(false)}>
-          {error === '' ? <OrderDetails number={number} />: <div className={styles.error}>{error}</div>}
+          {!orderFailed ? (
+            <OrderDetails number={orderNumber} />
+          ) : (
+            <div className={styles.error}>Ошибка</div>
+          )}
         </Modal>
-        )}
+      )}
     </div>
   );
 }

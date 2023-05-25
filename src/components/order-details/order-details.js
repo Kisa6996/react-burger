@@ -1,10 +1,7 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { NumberContext } from "../../context/contex-app";
-function OrderDetails() {
-  const [number] = useContext(NumberContext);
+function OrderDetails({number}) {
   return (
     <div>
       <div className={styles.container}>

@@ -22,14 +22,13 @@ function Modal({ children, open, onClose, text }) {
   });
   const handleEscapeKey = () => (event) => {
     if (event.code === "Escape") {
-      onClose(false);
+      onClose();
     }
   };
   useEffect((e) => {
     document.addEventListener("keydown", handleEscapeKey(e));
     return document.removeEventListener("keydown", handleEscapeKey);
   });
-
   return ReactDOM.createPortal(
     <div className={styles.modal}>
       <div className={styles.modalWindow}>
