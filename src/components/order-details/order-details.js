@@ -1,10 +1,14 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
-function OrderDetails() {
+import PropTypes from "prop-types";
+
+
+function OrderDetails({number}) {
+
   return (
     <div>
       <div className={styles.container}>
-        <h1 className=" text text_type_digits-large">034536</h1>
+        <h1 className=" text text_type_digits-large">{number}</h1>
         <h2 className="mt-8 mb-15 text text_type_main-medium">
           идентификатор заказа
         </h2>
@@ -19,4 +23,7 @@ function OrderDetails() {
     </div>
   );
 }
+OrderDetails.propTypes = {
+  number: PropTypes.number,
+};
 export default OrderDetails;

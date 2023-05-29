@@ -1,8 +1,12 @@
-.block{
+.block {
+    width: 450px;
     display: flex;
-    align-items: center;
-    gap:13px;
+    text-align: center;
+    gap: 13px;
 }
+/* .element {
+    width: 10000px !important;
+} */
 .scroll {
     max-height: calc(var(--size) * 96px);
     height: 52vh;

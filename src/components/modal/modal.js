@@ -8,8 +8,9 @@ import PropTypes from "prop-types";
 const modalRootElement = document.querySelector("#modal");
 
 function Modal({ children, open, onClose, text }) {
-  const element = useMemo(() => document.createElement("div"), []);
+ 
 
+  const element = useMemo(() => document.createElement("div"), []);
   useEffect(() => {
     if (open) {
       modalRootElement.appendChild(element);
@@ -22,14 +23,13 @@ function Modal({ children, open, onClose, text }) {
   });
   const handleEscapeKey = () => (event) => {
     if (event.code === "Escape") {
-      onClose(false);
+      onClose();
     }
   };
   useEffect((e) => {
     document.addEventListener("keydown", handleEscapeKey(e));
     return document.removeEventListener("keydown", handleEscapeKey);
   });
-
   return ReactDOM.createPortal(
     <div className={styles.modal}>
       <div className={styles.modalWindow}>
@@ -54,6 +54,6 @@ Modal.propTypes = {
 };
 Modal.defaultProps = {
   children: null,
-  text: ''
+  text: "",
 };
 export default Modal;
