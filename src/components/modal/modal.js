@@ -3,14 +3,13 @@ import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useMemo, useEffect } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
+import { useOutletContext } from "react-router-dom";
 
 const modalRootElement = document.querySelector("#modal");
 
-function Modal({ children, open, onClose, text }) {
- 
-
+function Modal() {
   const element = useMemo(() => document.createElement("div"), []);
+  const [text, open, onClose, children] = useOutletContext();
   useEffect(() => {
     if (open) {
       modalRootElement.appendChild(element);
@@ -46,14 +45,4 @@ function Modal({ children, open, onClose, text }) {
     element
   );
 }
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-};
-Modal.defaultProps = {
-  children: null,
-  text: "",
-};
 export default Modal;

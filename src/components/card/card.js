@@ -6,13 +6,15 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { addInfo, removeInfo } from "../../services/ingredient";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
-function Card({ data, count}) {
+function Card({ data, count }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   function onOpen() {
@@ -29,34 +31,37 @@ function Card({ data, count}) {
   });
 
   const onClose = useCallback(() => {
+    navigate(-1);
     setOpen(false);
     dispatch(removeInfo());
   }, [dispatch]);
 
   return (
     <div>
-      <div
-        style={{ opacity }}
-        ref={ref}
-        className={styles.card}
-        onClick={onOpen}
-      >
-        <img src={data.image} alt="burger" className="pl-4 pr-4" />
-        {count !== 0 && (
-          <Counter count={count} size="default" extraClass="m-1" />
-        )}
-        <div className={`${styles.price} mt-1 mb-1`}>
-          <p className="text text_type_main-default">{data.price}</p>
-          <CurrencyIcon type="primary" />
+      <Link to={`/ingredients/${data._id}`} state={{ backgroundId: location }}>
+        <div
+          style={{ opacity }}
+          ref={ref}
+          className={styles.card}
+          onClick={onOpen}
+        >
+          <img src={data.image} alt="burger" className="pl-4 pr-4" />
+          {count !== 0 && (
+            <Counter count={count} size="default" extraClass="m-1" />
+          )}
+          <div className={`${styles.price} mt-1 mb-1`}>
+            <p className="text text_type_main-default">{data.price}</p>
+            <CurrencyIcon type="primary" />
+          </div>
+          <p className={`${styles.text} text text_type_main-default`}>
+            {data.name}
+          </p>
         </div>
-        <p className={`${styles.text} text text_type_main-default`}>
-          {data.name}
-        </p>
-      </div>
+      </Link>
       {open && (
-        <Modal text="Детали ингредиента" open={open} onClose={onClose}>
-          <IngredientDetails />
-        </Modal>
+        <Outlet
+          context={["Детали ингредиента", open, onClose, <IngredientDetails />]}
+        />
       )}
     </div>
   );

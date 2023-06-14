@@ -1,5 +1,5 @@
 import styles from "./app-header.module.css";
-import ItemNav from "../item-nav/item-nav";
+import { NavLink} from "react-router-dom";
 import {
   ListIcon,
   BurgerIcon,
@@ -12,17 +12,62 @@ function AppHeader() {
     <header className={`${styles.header} p-4`}>
       <nav className={styles.navbar}>
         <div className={styles.link_item}>
-          <ItemNav icone={<BurgerIcon type="primary" />} flag={false}>
-            Конструктор
-          </ItemNav>
-          <ItemNav icone={<ListIcon type="secondary" />} flag={true}>
-            Лента заказов
-          </ItemNav>
+          <NavLink to="/">
+            {({ isActive }) => (
+              <div className={styles.item}>
+                <BurgerIcon
+                  type={
+                    isActive
+                      ? "primary"
+                      : "secondary"
+                  }
+                />
+                <p
+                  className={
+                    isActive
+                      ? "text text_type_main-default"
+                      : "text text_type_main-default text_color_inactive"
+                  }
+                >
+                  Конструктор
+                </p>
+              </div>
+            )}
+          </NavLink>
+          <NavLink to="/history">
+            {({ isActive }) => (
+              <div className={styles.item}>
+                <ListIcon type={isActive ? "primary" : "secondary"} />
+                <p
+                  className={
+                    isActive
+                      ? "text text_type_main-default"
+                      : "text text_type_main-default text_color_inactive"
+                  }
+                >
+                  Лента заказов
+                </p>
+              </div>
+            )}
+          </NavLink>
         </div>
         <Logo />
-        <ItemNav icone={<ProfileIcon type="secondary" />} flag={true}>
-          Личный кабинет
-        </ItemNav>
+        <NavLink to="/profile">
+          {({ isActive }) => (
+            <div className={styles.item}>
+              <ProfileIcon type={isActive ? "primary" : "secondary"} />
+              <p
+                className={
+                  isActive
+                    ? "text text_type_main-default"
+                    : "text text_type_main-default text_color_inactive"
+                }
+              >
+                Личный кабинет
+              </p>
+            </div>
+          )}
+        </NavLink>
       </nav>
     </header>
   );

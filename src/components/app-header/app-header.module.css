@@ -1,23 +1,26 @@
-.header{
-    background: #1C1C21;
+.header {
+    background: #1c1c21;
     padding-left: 320px !important;
     padding-right: 320px !important;
 }
-.navbar{
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     max-width: 1280px;
     margin: 0 auto;
-  
-    
 }
-.link_item{
+.link_item {
     display: flex;
 }
-  
-.link{
+
+
+.item {
+    padding: 20px;
     display: flex;
     align-items: center;
+    gap: 8px;
+    color: #f2f2f3;
+    text-decoration: none;
 }
