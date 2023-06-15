@@ -1,9 +1,16 @@
+import { useParams } from "react-router-dom";
 import StructureItem from "../structure-item/structure-item";
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
 
 function IngredientDetails() {
-  const { info } = useSelector((state) => state.infoSlice);
+  const { id } = useParams();
+  const data = JSON.parse(localStorage.getItem("data"));
+  let info = null;
+  data.forEach((value) => {
+    if (value.ingredient._id === id) {
+      info = value.ingredient;
+    }
+  });
   return (
     <div className={styles.block}>
       <img src={info.image_large} alt="data" />

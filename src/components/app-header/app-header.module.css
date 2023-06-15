@@ -1,7 +1,7 @@
 .header {
     background: #1c1c21;
-    padding-left: 320px !important;
-    padding-right: 320px !important;
+    /* padding-left: 30vh !important;
+    padding-right: 30vh !important; */
 }
 .navbar {
     display: flex;

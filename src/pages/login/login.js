@@ -1,5 +1,5 @@
 import styles from "./login.module.css";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { setLogin } from "../../services/actions/token/login";
 import {
   PasswordInput,
@@ -9,15 +9,16 @@ import {
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../hooks/use-auth";
+import { useForm } from "../../hooks/use-form";
 
 export function Login() {
+  const { values, handleChange, setError, error } = useForm({});
   const { isAuth } = useAuth();
   const location = useLocation();
   const { answerLogin } = useAuth();
 
   const navigate = useNavigate();
   //error
-  const [error, setError] = useState(false);
 
   // Маршруты
   function registration() {
@@ -27,28 +28,15 @@ export function Login() {
     navigate("/forgot-password");
   }
 
-  // input
-  const [password, setPassword] = useState("");
-  const onPassword = (e) => {
-    setPassword(e.target.value);
-    setError(false);
-  };
-
-  const [email, setEmail] = useState("");
-  const onEmail = (e) => {
-    setEmail(e.target.value);
-    setError(false);
-  };
-
   const dispatch = useDispatch();
 
   //submit
   function handleSubmit(e) {
     e.preventDefault();
-    if (password.length >= 5 && email !== "") {
-      dispatch(setLogin(password, email));
+    if (values.password.length >= 5 && values.email !== "") {
+      dispatch(setLogin(values.password, values.email));
     } else {
-      if (password === "" || email === "") setError(true);
+      if (values.password === "" || values.email === "") setError(true);
     }
   }
 
@@ -68,15 +56,15 @@ export function Login() {
       <EmailInput
         errorText="Некорректный Email"
         extraClass="mt-6"
-        onChange={onEmail}
-        value={email}
+        onChange={handleChange}
+        value={values.email || ''}
         name={"email"}
         isIcon={false}
       />
       <PasswordInput
         errorText="Пароль должен содержать более 5 символов"
-        onChange={onPassword}
-        value={password}
+        onChange={handleChange}
+        value={values.password || ''}
         name={"password"}
         extraClass="mt-6 mb-6"
       />

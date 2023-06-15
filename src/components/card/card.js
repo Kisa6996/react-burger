@@ -1,25 +1,21 @@
 import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import ingredients from "../../prop-types/ingredients";
-import { useCallback, useState } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { addInfo, removeInfo } from "../../services/ingredient";
+import { addInfo } from "../../services/ingredient";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Card({ data, count }) {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+
   function onOpen() {
     dispatch(addInfo(data));
-    setOpen(true);
   }
 
   const [{ opacity }, ref] = useDrag({
@@ -30,15 +26,9 @@ function Card({ data, count }) {
     }),
   });
 
-  const onClose = useCallback(() => {
-    navigate(-1);
-    setOpen(false);
-    dispatch(removeInfo());
-  }, [dispatch]);
-
   return (
     <div>
-      <Link to={`/ingredients/${data._id}`} state={{ backgroundId: location }}>
+      <Link to={`/ingredients/${data._id}`} state={{ background: location }}>
         <div
           style={{ opacity }}
           ref={ref}
@@ -58,11 +48,6 @@ function Card({ data, count }) {
           </p>
         </div>
       </Link>
-      {open && (
-        <Outlet
-          context={["Детали ингредиента", open, onClose, <IngredientDetails />]}
-        />
-      )}
     </div>
   );
 }

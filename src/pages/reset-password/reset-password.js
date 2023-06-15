@@ -1,3 +1,5 @@
+import { BASE_URL } from "../../utils/base-url";
+import { request } from "../../utils/request";
 import {
   PasswordInput,
   Input,
@@ -5,45 +7,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "../../hooks/use-form";
 
 export function ResetPassword() {
-  const [error, setError] = useState(false);
+  const { values, handleChange, setError, error } = useForm({});
+  const Api_URL = `${BASE_URL}/password-reset/reset`;
   const [errorPost, setErrorPost] = useState(false);
   const navigate = useNavigate();
 
   function login() {
     navigate("/login");
   }
-  const [password, setPassword] = useState("");
-  const onPassword = (e) => {
-    setPassword(e.target.value);
-    setError(false);
-    setErrorPost(false);
-  };
-  const [sms, setSms] = useState("");
-  const onSms = (e) => {
-    setSms(e.target.value);
-    setError(false);
-    setErrorPost(false);
-  };
+
   function handleSubmit(e) {
     e.preventDefault();
-    if (sms === "" || password === "") {
+    if (values.sms === "" || values.password === "") {
       setError(true);
     } else {
-      fetch("https://norma.nomoreparties.space/api/password-reset/reset", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: password,
-          token: sms,
-        }),
-      }).then((response) => {
-        response.ok ? navigate("/") : setErrorPost(true);
-      });
+      request(Api_URL, "POST", { password: values.password, token: values.sms })
+        .then(() => {
+          navigate("/");
+        })
+        .catch(() => {
+          setErrorPost(true);
+        });
     }
   }
   return (
@@ -51,14 +39,15 @@ export function ResetPassword() {
       <h1 className="text text_type_main-medium mt-30">Востановление пароля</h1>
       <PasswordInput
         placeholder={"Введите новый пароль"}
-        onChange={onPassword}
-        value={password}
+        onChange={handleChange}
+        name={"password"}
+        value={values.password || ""}
         extraClass="mt-6 mb-6"
       />
       <Input
         type={"text"}
-        onChange={onSms}
-        value={sms}
+        onChange={handleChange}
+        value={values.sms || ""}
         placeholder={"Введите код из письма"}
         name={"sms"}
         errorText={"Ошибка"}

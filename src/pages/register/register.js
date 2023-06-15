@@ -1,6 +1,5 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
-import { useState } from "react";
 import { setRegister } from "../../services/actions/token/register";
 import {
   PasswordInput,
@@ -10,10 +9,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../hooks/use-auth";
+import { useForm } from "../../hooks/use-form";
 
 export function Register() {
+  const { values, handleChange, setError, error } = useForm({});
   const { isRegister, isAuth } = useAuth();
-  const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,27 +23,13 @@ export function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== "" && email !== "" && name !== "") {
-      dispatch(setRegister(name, password, email));
+    if (values.password !== "" && values.email !== "" && values.name !== "") {
+      dispatch(setRegister(values.name, values.password, values.email));
     } else {
       setError(true);
     }
   };
-  const [name, setName] = useState("");
-  const onName = (e) => {
-    setName(e.target.value);
-    setError(false);
-  };
-  const [password, setPassword] = useState("");
-  const onPassword = (e) => {
-    setPassword(e.target.value);
-    setError(false);
-  };
-  const [email, setEmail] = useState("");
-  const onEmail = (e) => {
-    setEmail(e.target.value);
-    setError(false);
-  };
+
   if (isAuth) {
     return <Navigate to="/" replace />;
   }
@@ -54,24 +40,24 @@ export function Register() {
         type={"text"}
         placeholder={"Имя"}
         name={"name"}
-        value={name}
-        onChange={onName}
+        value={values.name || ""}
+        onChange={handleChange}
         size={"default"}
         extraClass="mt-6"
       />
       <EmailInput
         errorText={"Некорекктный E-mail"}
         extraClass="mt-6"
-        onChange={onEmail}
-        value={email}
+        onChange={handleChange}
+        value={values.email || ""}
         name={"email"}
         isIcon={false}
       />
       <PasswordInput
         extraClass="mt-6 mb-6"
         errorText={"Введите пароль"}
-        onChange={onPassword}
-        value={password}
+        onChange={handleChange}
+        value={values.password || ""}
         name={"password"}
       />
       {error && (

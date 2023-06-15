@@ -1,21 +1,19 @@
+import { BASE_URL } from "../../utils/base-url";
+import { request } from "../../utils/request";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import styles from "./forgot-password.module.css";
-import { useState } from "react";
 import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuth } from "../../hooks/use-auth";
+import { useForm } from "../../hooks/use-form";
 
 export function ForgotPassword() {
+  const { values, handleChange, setError, error } = useForm({});
+  const Api_URL = `${BASE_URL}/password-reset`;
   const { isAuth } = useAuth();
   const location = useLocation().pathname;
-  const [error, setError] = useState(false);
-  const [email, setEmail] = useState("");
-  const onEmail = (e) => {
-    setEmail(e.target.value);
-    setError(false);
-  };
 
   const navigate = useNavigate();
   function login() {
@@ -24,23 +22,15 @@ export function ForgotPassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (email === "") {
+    if (values.email === "") {
       setError(true);
     } else {
-      fetch("https://norma.nomoreparties.space/api/password-reset", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-        }),
-      })
+      request(Api_URL, "POST", { email: values.email })
         .then(() => {
           navigate("/reset-password", { state: location });
         })
-        .catch((error) => {
-          console.error("Произошла ошибка:", error);
+        .catch(() => {
+          console.log("Произошла ошибка");
         });
     }
   }
@@ -53,8 +43,8 @@ export function ForgotPassword() {
       <EmailInput
         errorText="Некорректный Email"
         extraClass="mt-6 mb-6"
-        onChange={onEmail}
-        value={email}
+        onChange={handleChange}
+        value={values.email || ""}
         name={"email"}
         isIcon={false}
       />

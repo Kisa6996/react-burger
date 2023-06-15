@@ -11,12 +11,12 @@ function BurgerIngredients() {
   const { data, dataRequest, dataFailed } = useSelector(
     (state) => state.dataReducer
   );
-  const Api_URL = "https://norma.nomoreparties.space/api/ingredients";
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem("data") === null || dataRequest) {
-      dispatch(getData(Api_URL));
+      dispatch(getData());
     }
   }, [dispatch, dataRequest]);
 
