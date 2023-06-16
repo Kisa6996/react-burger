@@ -13,6 +13,7 @@ import styles from "./profile.module.css";
 export function ProfileIndex() {
   const { token } = useAuth();
   const dispatch = useDispatch();
+
   const [disabled, setDisabled] = useState(true);
   const { user, userRequest } = useSelector((state) => state.profileReducer);
 
@@ -49,48 +50,58 @@ export function ProfileIndex() {
   };
   return (
     <form onSubmit={handleClickEnter}>
-      <Input
-        onIconClick={handleClickIcon}
-        disabled={disabled}
-        type={"text"}
-        placeholder={"Имя"}
-        icon="EditIcon"
-        onChange={onName}
-        value={name}
-        name={"name"}
-      />
-      <EmailInput
-        onIconClick={handleClickIcon}
-        disabled={disabled}
-        onChange={onEmail}
-        value={email}
-        name={"email"}
-        placeholder="Логин"
-        isIcon={true}
-        extraClass="mt-6 mb-6"
-      />
-      <PasswordInput
-        onIconClick={handleClickIcon}
-        disabled={disabled}
-        onChange={onPassword}
-        value={password}
-        name={"password"}
-        icon="EditIcon"
-      />
-      {userRequest && (
-        <p className={`text text_type_main-default ${styles.info} mb-3`}>
-          Данные успешно изменены
-        </p>
-      )}
-      {!disabled && (
-        <div className={styles.buttons}>
-          <Button type="secondary" htmlType="reset" onClick={handleClickCancel}>
-            Отменить
-          </Button>
-          <Button type="primary" htmlType="submit">
-            Сохранить
-          </Button>
+      {user !== null ? (
+        <div>
+          <Input
+            onIconClick={handleClickIcon}
+            disabled={disabled}
+            type={"text"}
+            placeholder={"Имя"}
+            icon="EditIcon"
+            onChange={onName}
+            value={name}
+            name={"name"}
+          />
+          <EmailInput
+            onIconClick={handleClickIcon}
+            disabled={disabled}
+            onChange={onEmail}
+            value={email}
+            name={"email"}
+            placeholder="Логин"
+            isIcon={true}
+            extraClass="mt-6 mb-6"
+          />
+          <PasswordInput
+            onIconClick={handleClickIcon}
+            disabled={disabled}
+            onChange={onPassword}
+            value={password}
+            name={"password"}
+            icon="EditIcon"
+          />
+          {userRequest && (
+            <p className={`text text_type_main-default ${styles.info} mb-3`}>
+              Данные успешно изменены
+            </p>
+          )}
+          {!disabled && (
+            <div className={styles.buttons}>
+              <Button
+                type="secondary"
+                htmlType="reset"
+                onClick={handleClickCancel}
+              >
+                Отменить
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Сохранить
+              </Button>
+            </div>
+          )}
         </div>
+      ) : (
+        <div>Loading...</div>
       )}
     </form>
   );

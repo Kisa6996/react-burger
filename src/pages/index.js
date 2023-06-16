@@ -5,7 +5,7 @@ import { Profile } from "./profile/profile";
 import { Register } from "./register/register";
 import { ForgotPassword } from "./forgot-password/forgot-password";
 import { ResetPassword } from "./reset-password/reset-password";
-import { Ingredients } from "./ingredients/ingredients";
+// import { PageIngredient } from "./page-ingredient/page-ingredient";
 
 export {
   Main,
@@ -15,5 +15,5 @@ export {
   ForgotPassword,
   Profile,
   ResetPassword,
-  Ingredients,
+  // PageIngredient,
 };

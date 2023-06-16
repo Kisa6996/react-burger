@@ -2,14 +2,27 @@ import { Route, Routes } from "react-router-dom";
 import styles from "./profile.module.css";
 import { NavLink } from "react-router-dom";
 import { ProfileIndex } from "./profile-index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Exit } from "../../services/actions/token/exit";
+import { useEffect } from "react";
+import { getProfile } from "../../services/actions/profile";
+import { useAuth } from "../../hooks/use-auth";
+
 export function Profile() {
+  const { user } = useSelector((state) => state.profileReducer);
+  const { token } = useAuth();
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (user === null) {
+      dispatch(getProfile(token));
+    }
+  }, [token, dispatch, user]);
   function onClick(e) {
     e.preventDefault();
     dispatch(Exit());
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.block}>
@@ -45,10 +58,12 @@ export function Profile() {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <Routes>
-          <Route path="/orders" element={null} />
-          <Route path="/" element={<ProfileIndex />} />
-        </Routes>
+        {user && (
+          <Routes>
+            <Route path="/orders" element={null} />
+            <Route path="/" element={<ProfileIndex />} />
+          </Routes>
+        )}
       </div>
     </div>
   );
