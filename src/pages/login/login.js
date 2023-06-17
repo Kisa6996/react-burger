@@ -1,5 +1,5 @@
 import styles from "./login.module.css";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { setLogin } from "../../services/actions/token/login";
 import {
   PasswordInput,
@@ -16,6 +16,8 @@ export function Login() {
   const { isAuth } = useAuth();
   const location = useLocation();
   const { answerLogin } = useAuth();
+
+  const redirect = location.state || "/";
 
   const navigate = useNavigate();
   //error
@@ -47,7 +49,7 @@ export function Login() {
   }, [answerLogin.userRequest, navigate, location.state]);
 
   if (isAuth) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={redirect} replace />;
   }
 
   return (
@@ -57,14 +59,14 @@ export function Login() {
         errorText="Некорректный Email"
         extraClass="mt-6"
         onChange={handleChange}
-        value={values.email || ''}
+        value={values.email || ""}
         name={"email"}
         isIcon={false}
       />
       <PasswordInput
         errorText="Пароль должен содержать более 5 символов"
         onChange={handleChange}
-        value={values.password || ''}
+        value={values.password || ""}
         name={"password"}
         extraClass="mt-6 mb-6"
       />

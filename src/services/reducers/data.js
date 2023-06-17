@@ -22,12 +22,13 @@ const dataReducer = (state = initialState, action) => {
       };
     }
     case GET_DATA_SUCCESS: {
+      const info = action.data.map((item) => ({
+        ingredient: item,
+        count: 0,
+      }));
       return {
         ...state,
-        data: action.data.map((item) => ({
-          ingredient: item,
-          count: 0,
-        })),
+        data: info,
         dataRequest: false,
       };
     }

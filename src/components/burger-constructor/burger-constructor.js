@@ -22,7 +22,6 @@ function BurgerConstructor() {
     drop(item) {
       dispatch(updateConsrtuctor(item, uuidv4()));
       dispatch(updateData(item));
-      localStorage.setItem("data", JSON.stringify(data));
     },
   });
 

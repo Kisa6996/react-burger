@@ -34,6 +34,7 @@ export function ForgotPassword() {
         });
     }
   }
+  console.log(1)
   if (isAuth) {
     return <Navigate to="/" replace />;
   }
