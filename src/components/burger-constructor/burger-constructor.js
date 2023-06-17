@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 
 function BurgerConstructor() {
   const { flag } = useSelector((state) => state.burgerReducer);
-  const { data } = useSelector((state) => state.dataReducer);
   const dispatch = useDispatch();
 
   // Бросок ингрдиента в конструктор

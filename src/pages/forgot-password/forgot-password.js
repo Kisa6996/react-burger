@@ -34,10 +34,6 @@ export function ForgotPassword() {
         });
     }
   }
-  console.log(1)
-  if (isAuth) {
-    return <Navigate to="/" replace />;
-  }
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h1 className="text text_type_main-medium mt-30">Востановление пароля</h1>

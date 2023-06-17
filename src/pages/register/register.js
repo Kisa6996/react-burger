@@ -29,10 +29,6 @@ export function Register() {
       setError(true);
     }
   };
-
-  if (isAuth) {
-    return <Navigate to="/" replace />;
-  }
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h1 className="text text_type_main-medium mt-30">Регестрация</h1>

@@ -44,6 +44,7 @@ function App() {
     );
   }, [closeModal]);
 
+
   useEffect(() => {
     if (isAuth) {
       setLoiding(isAuth);
@@ -69,10 +70,31 @@ function App() {
           <Routes location={background || location}>
             <Route path="*" element={<Error />} />
             <Route path="/ingredients/:id" element={<PageIngredient />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRouteElement onlyAnAuth={true} element={<Login />} />
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRouteElement
+                  onlyAnAuth={true}
+                  element={<Register />}
+                />
+              }
+            />
             <Route path="/" element={<Main />}></Route>
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/forgot-password"
+              element={
+                <ProtectedRouteElement
+                  onlyAnAuth={true}
+                  element={<ForgotPassword />}
+                />
+              }
+            />
             <Route
               path="/reset-password"
               element={<RedirectPassword element={<ResetPassword />} />}

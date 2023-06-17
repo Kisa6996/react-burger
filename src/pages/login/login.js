@@ -48,9 +48,7 @@ export function Login() {
     }
   }, [answerLogin.userRequest, navigate, location.state]);
 
-  if (isAuth) {
-    return <Navigate to={redirect} replace />;
-  }
+
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

@@ -5,17 +5,16 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export function PageIngredient() {
-  const { data } = useSelector((stote) => stote.dataReducer);
+  const { data } = useSelector((store) => store.dataReducer);
   const [info, setInfo] = useState(null);
   const { id } = useParams();
-
   useEffect(() => {
     data.forEach((value) => {
       if (value.ingredient._id === id) {
         setInfo(value.ingredient);
       }
     });
-  }, []);
+  }, [data]);
   return (
     <>
       {info !== null ? (
