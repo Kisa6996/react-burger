@@ -1,3 +1,5 @@
+import { BASE_URL } from "../../utils/base-url";
+import { request } from "../../utils/request";
 export const GET_DATA = "GET_DATA";
 export const GET_DATA_FAILED = "GET_DATA_FAILED";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
@@ -6,25 +8,24 @@ export const REMOVE_COUNT = "REMOVE_COUNT";
 export const UPDATE_BUN = "UPDATE_BUN";
 export const INITIAL = "INITIAL";
 
-export function getData(Api_UR) {
+export function getData() {
+  const Api_URL = `${BASE_URL}/ingredients`;
   return function (dispatch) {
     dispatch({
       type: GET_DATA,
     });
-    fetch(Api_UR).then((res) =>
-      res.ok
-        ? res.json().then((data) => {
-            dispatch({
-              type: GET_DATA_SUCCESS,
-              data: data.data,
-            });
-          })
-        : res.json().then(
-            dispatch({
-              type: GET_DATA_FAILED,
-            })
-          )
-    );
+    request(Api_URL, "GET")
+      .then((data) => {
+        dispatch({
+          type: GET_DATA_SUCCESS,
+          data: data.data,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_DATA_FAILED,
+        });
+      });
   };
 }
 export function updateData(item) {

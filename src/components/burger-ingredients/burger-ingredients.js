@@ -1,41 +1,21 @@
 import styles from "./burger-ingredients.module.css";
 import MyTab from "../my-tab/my-tab";
 import Cards from "../cards/cards";
-import { useEffect} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getData } from "../../services/actions/data";
+import { useSelector } from "react-redux";
 
 function BurgerIngredients() {
-  let bread, sauce, stuffing;
+  const { data } = useSelector((stote) => stote.dataReducer);
 
-  const { data, dataRequest, dataFailed } = useSelector(
-    (state) => state.dataReducer
-  );
-  const Api_URL = "https://norma.nomoreparties.space/api/ingredients"
-  const dispatch = useDispatch();
+  const bread = data.filter((item) => item.ingredient.type === "bun");
+  const sauce = data.filter((item) => item.ingredient.type === "sauce");
+  const stuffing = data.filter((item) => item.ingredient.type === "main");
 
-  useEffect(() => {
-    dispatch(getData(Api_URL));
-  }, [dispatch]);
-
-  if (!dataRequest) {
-    bread = data.filter((item) => item.ingredient.type === "bun");
-    sauce = data.filter((item) => item.ingredient.type === "sauce");
-    stuffing = data.filter((item) => item.ingredient.type === "main");
-  }
-
-
-  if (dataFailed) {
-    return <h1 className="text text_type_main-large">Error:</h1>;
-  }
 
   return (
     <section>
       <h1 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h1>
-      <MyTab/>
-      {dataRequest ? (
-        <h1 className="text text_type_main-large"> Loading...</h1>
-      ) : (
+      <MyTab />
+      {/* {info !== null ? ( */}
         <div id="scroll" className={styles.scroll}>
           <Cards id="bun" arr={bread}>
             Булки
@@ -47,7 +27,7 @@ function BurgerIngredients() {
             Начинки
           </Cards>
         </div>
-      )}
+      {/* ) : null} */}
     </section>
   );
 }

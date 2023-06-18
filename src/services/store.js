@@ -3,13 +3,16 @@ import infoSlice from "../services/ingredient";
 import dataReducer from "./reducers/data";
 import burgerReducer from "./reducers/burger";
 import orderReducer from "./reducers/order";
-import { combineReducers } from 'redux';
-
+import profileReducer from "./reducers/profile";
+import { combineReducers } from "redux";
+import userReducer from "./reducers/token";
 const rootReducer = combineReducers({
+  userReducer,
   orderReducer,
   burgerReducer,
   dataReducer,
   infoSlice,
+  profileReducer
 });
 const store = configureStore({
   reducer: rootReducer,

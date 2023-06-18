@@ -1,15 +1,17 @@
-.card{
+.card {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
-.price{
+.price {
+    color: white;
     display: flex;
-    gap:9px
+    gap: 9px;
 }
-.text{
+.text {
+    color: white;
     height: 48px;
     max-width: 272px;
 }

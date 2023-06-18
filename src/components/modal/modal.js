@@ -2,23 +2,17 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useMemo, useEffect } from "react";
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
 
 const modalRootElement = document.querySelector("#modal");
 
-function Modal({ children, open, onClose, text }) {
- 
-
+function Modal({ onClose, text, children }) {
   const element = useMemo(() => document.createElement("div"), []);
   useEffect(() => {
-    if (open) {
-      modalRootElement.appendChild(element);
-    }
+    modalRootElement.appendChild(element);
     return () => {
-      if (open) {
-        modalRootElement.removeChild(element);
-      }
+      modalRootElement.removeChild(element);
     };
   });
   const handleEscapeKey = () => (event) => {
@@ -41,7 +35,7 @@ function Modal({ children, open, onClose, text }) {
         </div>
         {children}
       </div>
-      {open && <ModalOverlay onClick={onClose} />}
+      <ModalOverlay onClick={onClose} />
     </div>,
     element
   );
@@ -49,7 +43,6 @@ function Modal({ children, open, onClose, text }) {
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
 };
 Modal.defaultProps = {
